@@ -2,14 +2,16 @@
 {
     using System;
     using System.Configuration;
+    using System.Drawing;
     using System.IO;
     using System.Linq;
     using System.Net.Http;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using System.Windows;
-    using System.Windows.Media;
     using System.Windows.Media.Imaging;
+    
+    using WinForms = System.Windows.Forms;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,7 +25,6 @@
         private readonly Regex titleRegex = new Regex("<b>(?<title>.*?)</b>\\s?<br>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         
         private const string BaseUrl = "https://apod.nasa.gov/apod/";
-        
 
         public MainWindow()
         {
@@ -34,8 +35,30 @@
             };
             
             this.InitializeComponent();
+            this.InitializeTrayIcon();
             
             this.DataContext = this;
+        }
+
+        private void InitializeTrayIcon()
+        {
+            var bitmap = new Bitmap("saturn.png");
+            var handle = bitmap.GetHicon();
+            
+            var notifyIcon = new WinForms.NotifyIcon
+            {
+                Icon = System.Drawing.Icon.FromHandle(handle),
+                Visible = true,
+                Text = "Apod Downloader"
+            };
+
+            notifyIcon.DoubleClick += (sender, args) =>
+            {
+                this.Show();
+                this.WindowState = WindowState.Normal;
+            };
+
+            this.ShowInTaskbar = false;
         }
 
         private void SaveImageAsync(object sender, RoutedEventArgs e)

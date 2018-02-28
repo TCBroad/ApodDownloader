@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:ApodDownloader"
         mc:Ignorable="d"
         Title="Apod Downloader" Height="500" Width="700" 
-        ResizeMode="NoResize"
-        Initialized="MainWindow_OnInitialized">
+        ResizeMode="CanMinimize"
+        Initialized="MainWindow_OnInitialized" Icon="saturn.png">
     <StackPanel x:Name="ContentPanel" Margin="10" VerticalAlignment="Stretch">
         <TextBlock Name="ImageName" HorizontalAlignment="Left"
                    TextWrapping="Wrap"
